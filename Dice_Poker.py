@@ -1,5 +1,6 @@
 import random
 
+'''
 def print_dice(dice_list):
 
     # Prints dices one by one, refering to their coresponding numbers from the list used as an argument
@@ -25,13 +26,76 @@ def print_dice(dice_list):
     for dice in dices[dice_list]:
         print(patterns[dice])
 
+'''
 
-def print_dice_list(dice_list):
+'''
+def print_dice_rows(dice_list):
 
     # Prints all the dices from privided list, using print_dice() function
 
     for dice in dice_list:
         print_dice(dice)
+
+'''
+
+def return_dice_rows(dice_num):
+
+    # Return dice string components as a list, that will be used in print_dice_rows()
+    
+    patterns = {
+                'top/bot':' ------- ',
+                'none':'|       |',
+                "one":'|   *   |',
+                'two':'| *   * |',
+                'one_right':'|     * |',
+                'one_left':'| *     |'
+                }
+    
+    dices = {
+             1:['top/bot','none','one','none','top/bot'],
+             2:['top/bot','none','two','none','top/bot'],
+             3:['top/bot','one_left','one','one_right','top/bot'],
+             4:['top/bot','two','none','two','top/bot'],
+             5:['top/bot','two','one','two','top/bot'],
+             6:['top/bot','two','two','two','top/bot']
+             }
+    
+
+    component_list = []
+
+    for dice in dices[dice_num]:
+        component_list.append(patterns[dice])
+    
+    return component_list
+
+def print_dice_rows(dice_list):
+
+    # Prints the dices in a compact and easy to display row
+
+
+    # Stores each individial dice components as vertical reprezentation.
+
+    dice_dict = {
+                 0 : "",
+                 1 : "",
+                 2 : "",
+                 3 : "",
+                 4 : ""
+                 }
+    
+    # For each of the dices, it adds a one component to a separate string
+
+    for dice in dice_list:
+
+        dice_row = return_dice_rows(dice)
+
+        for num in range(0,5):
+            dice_dict[num] = dice_dict[num] + dice_row[num] + "  "
+
+    # Prints concatenated individual visual componets in one line
+
+    for num in range(0,5):
+        print(dice_dict[num])
 
 def pick_starting_player():
 
@@ -89,6 +153,9 @@ def reroll_choice():
 
 
 while True:
+
+    # A string to be placed on top of the dices, to help players choose dices to roll
+    dice_number_help = "   [1]        [2]        [3]        [4]        [5]   "
     
     print("Welcome to The Dice Poker game! The rules originate from video game The Witcher 2: Assassins of Kings.")
 
@@ -97,7 +164,8 @@ while True:
                 "Player 2" : [0,0,0,0,0]
                }
 
-    input("Person pressing the Enter key will be the Player 1. The game decide which person will go first. Press Enter when you ready!")
+    print("Person pressing the Enter key will be the Player 1. The game decide which person will go first.")
+    input("Press Enter when you ready!")
 
     current_player = pick_starting_player()
     print(current_player + " will be the first to roll!")
@@ -108,49 +176,53 @@ while True:
     while turn == 1:
 
         roll_all_dices(players_set[current_player])
-        print_dice_list(players_set[current_player])
+
+        print(dice_number_help)
+        print()
+
+        print_dice_rows(players_set[current_player])
 
         roll_choosen_dices(reroll_choice(), players_set[current_player])
-        print_dice_list(players_set[current_player])
+        print_dice_rows(players_set[current_player])
 
         if current_player == "Player 1":
             current_player = "Player 2"
         else:
             current_player = "Player 1"
 
-        print("Now is " + current_player + " Turn!")
-
         turn += 1
 
     while turn == 2:
 
+        print("Now is " + current_player + " Turn!")
+
         input("Press Enter when you're ready to roll!")
 
         roll_all_dices(players_set[current_player])
-        print_dice_list(players_set[current_player])
+
+        print(dice_number_help)
+        print()
+
+        print_dice_rows(players_set[current_player])
 
         roll_choosen_dices(reroll_choice(), players_set[current_player])
-        print_dice_list(players_set[current_player])
+        print_dice_rows(players_set[current_player])
+
 
         turn += 1
 
     print("That concludes the game! Compare your configurations to see which player won!")
-    print("For a reminder, there are your dices side by side.")
+
+    input("Press Enter to go to the end screen")
+
+    print("For a reminder, there are your dices configurations side by side.")
 
     print("Player 1 dices.")
-    print_dice_list(players_set["Player 1"])
+    print_dice_rows(players_set["Player 1"])
 
     print("Player 2 dices.")
-    print_dice_list(players_set["Player 2"])
+    print_dice_rows(players_set["Player 2"])
 
     break
 
 input('Press Enter to exit...')
-
-'''
-roll_all_dices(placeholder_list)
-print_dice_list(placeholder_list)
-
-    
-roll_choosen_dices(reroll_choice(), placeholder_list)
-    '''
