@@ -149,8 +149,71 @@ def reroll_choice():
     
     return unique_player_choice
 
+def roll_combination_check(given_list):
+
+    combined_value = 0
+
+    combination = {"" : 0}
+
+    numbers_dict = {
+                1 : 0,
+                2 : 0,
+                3 : 0,
+                4 : 0,
+                5 : 0,
+                6 : 0
+                }
+
+    for dice in given_list:
+        numbers_dict[dice] += 1
+        combined_value += dice
+
+    roll_value_list = []
+
+    for num in range(1,7):
+        if numbers_dict[num] == 0:
+            pass
+        else:
+            roll_value_list = roll_value_list + [numbers_dict[num]]
+
+    roll_value_list.sort()
+
+    if roll_value_list == [5]:
+        combination = {"Five-of-a-kind" : 8}
+
+    elif roll_value_list == [1,4]:
+        combination = {"Four-of-a-kind" : 7}
+
+    elif roll_value_list == [2,3]:
+        combination = {"Full House" : 6}
+
+    elif roll_value_list == [1,1,1,1,1] and numbers_dict[6] == 1 and numbers_dict[1] == 0:
+        combination = {"Six-high strait" : 5}
+
+    elif roll_value_list == [1,1,1,1,1] and numbers_dict[6] == 0 and numbers_dict[1] == 1:
+        combination = {"Five-high strait" : 4}
+
+    elif roll_value_list == [1,1,3]:
+        combination = {"Three-of-a-kind" : 3}
+
+    elif roll_value_list == [1,2,2]:
+        combination = {"Two pairs" : 2}
+
+    elif roll_value_list == [1,1,1,2]:
+        combination = {"One Pair" : 1}
+
+    else:
+        pass
+    
+    print(roll_value_list)
+    return [combination,combined_value]
 
 
+
+
+
+
+#Game logic
 
 while True:
 
