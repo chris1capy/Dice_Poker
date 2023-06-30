@@ -191,11 +191,15 @@ def change_name(players_name_dict, player_name_code):
     print(player_name_code + " you can choose your nickname that will be displayed during the game.")
 
     nickname = input("Your nickname (you can leave it empty if you just want to be called '{}'): ".format(player_name_code))
-
     players_name_dict[player_name_code] = nickname
 
     clear()
-    print(player_name_code + " now will be called " + players_name_dict[player_name_code] + ".\n")
+
+    if players_name_dict[player_name_code] != "":
+        print(player_name_code + " will now be called " + players_name_dict[player_name_code] + ".\n")
+    else:
+        players_name_dict[player_name_code] = player_name_code
+        print(player_name_code + " will remain called " + players_name_dict[player_name_code] + ".\n")
 
     if player_name_code == "Player 1":
         player_name_code = "Player 2"
@@ -203,13 +207,17 @@ def change_name(players_name_dict, player_name_code):
         player_name_code = "Player 1"
 
     print("Now, " + player_name_code + " you can choose your nickname too.")
-
+    
     nickname = input("Your nickname (you can leave it empty if you just want to be called '{}'): ".format(player_name_code))
 
     players_name_dict[player_name_code] = nickname
 
     clear()
-    print(player_name_code + " now will be called " + players_name_dict[player_name_code] + ".")
+    if players_name_dict[player_name_code] != "":
+        print(player_name_code + " will now be called " + players_name_dict[player_name_code] + ".\n")
+    else:
+        players_name_dict[player_name_code] = player_name_code
+        print(player_name_code + " will remain called " + players_name_dict[player_name_code] + ".\n")
     
 
 # A string to be placed on top of the dices, to help players choose dices to roll
